@@ -147,17 +147,16 @@ def runinstr(tup, decls, cells, params):
         assert instr == "call"
         procname, args = args
 
-        print(procname, args)
+        funcargs = []
+        for arg in args:
+            funcargs.append(runinstr(arg, decls, cells, params))
 
-        for i in range(len(args)):
-            args[i] = runinstr(args[i], decls, cells, params)
-
-        params, block = decls[procname]
-        params = dict(zip(params, args))
+        funcparams, block = decls[procname]
+        funcargs = dict(zip(funcparams, funcargs))
         default_output = False if procname.endswith("?") else 0
         cells = {-1: default_output}
         try:
-            runinstr(block, decls, cells, params)
+            runinstr(block, decls, cells, funcargs)
         except Abort as a:
             raise Exception(a.str())
         except Break as b:
