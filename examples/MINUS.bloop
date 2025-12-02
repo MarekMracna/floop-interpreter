@@ -1,0 +1,17 @@
+DEFINE PROCEDURE "MINUS" [N,M]:
+BLOCK 0: BEGIN
+    CELL(0) <= 0;
+    CELL(1) <= 1;
+    LOOP AT MOST N TIMES:
+    BLOCK 1: BEGIN
+        CELL(0) <= CELL(1) + M;
+        IF CELL(0) = N, THEN:
+        BLOCK 2: BEGIN
+            OUTPUT <= CELL(1);
+            ABORT LOOP 1;
+        BLOCK 2: END
+        CELL(1) <= CELL(1) + 1;
+    BLOCK 1: END
+BLOCK 0: END
+
+MINUS(50, 13)
