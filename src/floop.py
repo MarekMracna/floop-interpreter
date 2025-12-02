@@ -3,7 +3,7 @@ import sys
 
 grammar = r"""
     start: decl* call?
-    decl: "DEFINE" "PROCEDURE" "\"" procname "\"" params ":" block
+    decl: "DEFINE" "PROCEDURE" "\"" procname "\"" params ":" block "."?
     params: "[" param ("," param)* "]"
     param: /[A-Z]+/
     procname: testname | funcname
