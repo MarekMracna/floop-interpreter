@@ -17,10 +17,10 @@ grammar = r"""
     assign: lvalue "<=" expr ";"
     lvalue: cell | output
     cell: "CELL" "(" NUMBER ")"
-    expr: intexpr | boolexpr
+    expr: boolexpr | intexpr
     intexpr: intval PLUS intval | intval TIMES intval | intval
     boolexpr: boolval EQ boolval | intval EQ intval | intval LT intval | intval GT intval | boolval
-    intval: num | cellfetch | outputfetch | paramfetch | call
+    intval: num | cellfetch | outputfetch | call | paramfetch
     boolval: bool | cellfetch | outputfetch | call
     cellfetch: cell
     paramfetch: param
