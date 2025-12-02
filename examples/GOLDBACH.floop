@@ -1,0 +1,65 @@
+DEFINE PROCEDURE "MINUS" [N,M]:
+BLOCK 0: BEGIN
+    CELL(0) <= 0;
+    CELL(1) <= 1;
+    LOOP AT MOST N TIMES:
+    BLOCK 1: BEGIN
+        CELL(0) <= CELL(1) + M;
+        IF CELL(0) = N, THEN:
+        BLOCK 2: BEGIN
+            OUTPUT <= CELL(1);
+            ABORT LOOP 1;
+        BLOCK 2: END
+        CELL(1) <= CELL(1) + 1;
+    BLOCK 1: END
+BLOCK 0: END.
+
+DEFINE PROCEDURE "REMAINDER" [N,M]:
+BLOCK 0: BEGIN
+    CELL(0) <= 0;
+    LOOP AT MOST N TIMES:
+    BLOCK 1: BEGIN
+        CELL(1) <= CELL(0) + M;
+        IF CELL(1) > N, THEN:
+        BLOCK 2: BEGIN
+            OUTPUT <= MINUS(N, CELL(0));
+            ABORT LOOP 1;
+        BLOCK 2: END
+        CELL(0) <= CELL(1);
+    BLOCK 1: END
+BLOCK 0: END.
+
+DEFINE PROCEDURE "PRIME?" [N]:
+BLOCK 0: BEGIN
+    CELL(0) <= 2;
+    CELL(1) <= MINUS(N, 2);
+    LOOP AT MOST CELL(1) TIMES:
+    BLOCK 1: BEGIN
+        IF REMAINDER(N, CELL(0)) = 0, THEN:
+        BLOCK 2: BEGIN
+            QUIT BLOCK 0;
+        BLOCK 2: END
+        CELL(0) <= CELL(0) + 1;
+    BLOCK 1: END
+    OUTPUT <= YES;
+BLOCK 0: END.
+
+DEFINE PROCEDURE "GOLDBACH?" [N]:
+BLOCK 0: BEGIN
+    CELL(0) <= 2;
+    MU-LOOP:
+    BLOCK 1: BEGIN
+        IF PRIME?(CELL(0)), THEN:
+        BLOCK 2: BEGIN
+            CELL(1) <= MINUS(N, CELL(0));
+            IF PRIME?(CELL(1)), THEN:
+            BLOCK 3: BEGIN
+                ABORT LOOP 1;
+            BLOCK 3: END
+        BLOCK 2: END
+        CELL(0) <= CELL(0) + 1;
+    BLOCK 1: END
+    OUTPUT <= YES;
+BLOCK 0: END.
+
+GOLDBACH?(50)
