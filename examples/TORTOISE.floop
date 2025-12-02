@@ -51,7 +51,7 @@ BLOCK 0: BEGIN
     BLOCK 1: BEGIN
         IF PRIME?(CELL(0)), THEN:
         BLOCK 2: BEGIN
-            CELL(1) <= MINUS(N, CELL(0));
+            CELL(1) <= MINUS(CELL(0), N);
             IF PRIME?(CELL(1)), THEN:
             BLOCK 3: BEGIN
                 ABORT LOOP 1;
