@@ -123,16 +123,17 @@ def runinstr(tup, decls, cells, params):
                         break
                     else:
                         raise a
-        bound = runinstr(args[0], decls, cells, params)
-        for i in range(bound):
-            try:
-                runinstr(args[1], decls, cells, params)
-            except Abort as a:
-                _, blocknum, _ = args[1]
-                if a.blocknum == blocknum:
-                    break
-                else:
-                    raise a
+        else:
+            bound = runinstr(args[0], decls, cells, params)
+            for i in range(bound):
+                try:
+                    runinstr(args[1], decls, cells, params)
+                except Abort as a:
+                    _, blocknum, _ = args[1]
+                    if a.blocknum == blocknum:
+                        break
+                    else:
+                        raise a
     elif instr == "block":
         blocknum = args[0]
         try:
